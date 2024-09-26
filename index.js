@@ -9,6 +9,7 @@ import productRoute from "./routers/product.js";
 import cartRoute from "./routers/cart.js";
 import orderRoute from "./routers/order.js";
 import authRouter from "./routers/auth.js";
+import { verifyToken } from "./verifyToken.js";
 
 dotenv.config();
 
@@ -39,14 +40,12 @@ app.use(
   })
 );
 
-app.use("/api", authRouter);
 
-import { verifyToken } from "./verifyToken.js";
-app.use(verifyToken);
 
-app.use("/api/products", productRoute);
-app.use("/api/carts", cartRoute);
-app.use("/api/orders", orderRoute);
+app.use("/api", authRouter); // No need for token verification here
+app.use("/api/products", verifyToken, productRoute); // Apply token verification here for product routes
+app.use("/api/carts", verifyToken, cartRoute); // Apply token verification if needed for cart routes
+app.use("/api/orders", verifyToken, orderRoute); // Apply token verification if needed for order routes
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
