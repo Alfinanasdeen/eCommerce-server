@@ -17,17 +17,17 @@ router.get("/find/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   const qNew = req.query.new;
   const qCategory = req.query.category;
-  const qSearch = req.query.search; // Handle search query
+  const qSearch = req.query.search; 
 
   try {
     let products;
 
-    // Handle search query
+   
     if (qSearch) {
       products = await Product.find({
         $or: [
-          { name: { $regex: qSearch, $options: "i" } }, // Search by name
-          { description: { $regex: qSearch, $options: "i" } }, // Optionally search by description
+          { name: { $regex: qSearch, $options: "i" } }, 
+          { description: { $regex: qSearch, $options: "i" } }, 
         ],
       });
     } else if (qNew) {
@@ -37,7 +37,7 @@ router.get("/", async (req, res) => {
         categories: { $in: [qCategory] },
       });
     } else {
-      products = await Product.find(); // Get all products if no filters are applied
+      products = await Product.find();
     }
 
     res.status(200).json(products);

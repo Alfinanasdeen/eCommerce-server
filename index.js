@@ -42,10 +42,10 @@ app.use(
 
 
 
-app.use("/api", authRouter); // No need for token verification here
-app.use("/api/products", verifyToken, productRoute); // Apply token verification here for product routes
-app.use("/api/carts", verifyToken, cartRoute); // Apply token verification if needed for cart routes
-app.use("/api/orders", verifyToken, orderRoute); // Apply token verification if needed for order routes
+app.use("/api", authRouter); 
+app.use("/api/products", verifyToken, productRoute); 
+app.use("/api/carts", verifyToken, cartRoute); 
+app.use("/api/orders", verifyToken, orderRoute); 
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
