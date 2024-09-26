@@ -43,6 +43,7 @@ const ProductSchema = new mongoose.Schema(
       plantType: { type: String }, // Gardening
       toolType: { type: String }, // Gardening
     },
+    addedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true }
 );

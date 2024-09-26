@@ -17,17 +17,16 @@ router.get("/find/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   const qNew = req.query.new;
   const qCategory = req.query.category;
-  const qSearch = req.query.search; 
+  const qSearch = req.query.search;
 
   try {
     let products;
 
-   
     if (qSearch) {
       products = await Product.find({
         $or: [
-          { name: { $regex: qSearch, $options: "i" } }, 
-          { description: { $regex: qSearch, $options: "i" } }, 
+          { name: { $regex: qSearch, $options: "i" } },
+          { description: { $regex: qSearch, $options: "i" } },
         ],
       });
     } else if (qNew) {
@@ -58,4 +57,23 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Get products added by the admin
+router.post("/admin/products", async (req, res) => {
+  const newProduct = new Product({
+    title: req.body.title,
+    desc: req.body.desc,
+    img: req.body.img,
+    price: req.body.price,
+    categories: req.body.categories,
+    filters: req.body.filters,
+    addedBy: req.user._id,
+  });
+
+  try {
+    const savedProduct = await newProduct.save();
+    res.status(201).json(savedProduct);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 export default router;
