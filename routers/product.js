@@ -13,6 +13,27 @@ router.get("/find/:id", async (req, res) => {
   }
 });
 
+// POST: Add a new product
+router.post("/", async (req, res) => {
+  const newProduct = new Product(req.body);
+  try {
+    const savedProduct = await newProduct.save();
+    res.status(200).json(savedProduct);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// In your product routes file
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    res.status(200).json(product);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // GET ALL PRODUCTS
 router.get("/", async (req, res) => {
   const qNew = req.query.new;
@@ -43,6 +64,39 @@ router.get("/", async (req, res) => {
     res.status(200).json(products);
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+// Create Product
+router.post("/addProduct", async (req, res) => {
+  try {
+    const { title, desc, img, categories, filter, price, inStock } = req.body;
+
+    // Check for required fields
+    if (!title || !desc || !img || !price) {
+      return res
+        .status(400)
+        .json({
+          message: "Title, Description, Image, and Price are required!",
+        });
+    }
+
+    // Create new product
+    const newProduct = new Product({
+      title,
+      desc,
+      img,
+      categories: categories ? categories.split(",") : [], // Handling comma-separated string
+      filter: filter ? filter.split(",") : [],
+      price,
+      inStock: inStock !== undefined ? inStock : true,
+    });
+
+    // Save product to database
+    const savedProduct = await newProduct.save();
+    res.status(201).json(savedProduct);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 

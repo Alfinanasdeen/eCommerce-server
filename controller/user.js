@@ -56,11 +56,10 @@ const login = async (req, res) => {
 /* --------------------------------------------------------------------------------------------------------------------------------------------- */
 
 /* REGESTER */
-/* SIGNUP */
 const signup = async (req, res) => {
   console.log("Signup request received:", req.body);
   try {
-    const { email, username, password } = req.body; // Make sure to match the field names
+    const { email, username, password, userType } = req.body; // Make sure to match the field names
     console.log("Received data:", { username, email, password });
     
     if (!username || !email || !password) {
@@ -78,6 +77,7 @@ const signup = async (req, res) => {
       email,
       username, // Ensure this matches your schema
       password: hashedPassword,
+      userType
     });
 
     console.log("User created:", newUser);
