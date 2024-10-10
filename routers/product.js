@@ -57,6 +57,19 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Search products by title
+router.get('/api/products/search', async (req, res) => {
+  const { q } = req.query;
+  try {
+    const products = await Product.find({
+      title: { $regex: q, $options: 'i' }, // case-insensitive search
+    });
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: 'Error searching for products' });
+  }
+});
+
 // Get products added by the admin
 router.post("/admin/products", async (req, res) => {
   const newProduct = new Product({
