@@ -61,7 +61,7 @@ const signup = async (req, res) => {
   try {
     const { email, username, password, userType } = req.body; // Make sure to match the field names
     console.log("Received data:", { username, email, password });
-    
+
     if (!username || !email || !password) {
       return res.status(400).json({ message: "All fields are mandatory" });
     }
@@ -77,7 +77,7 @@ const signup = async (req, res) => {
       email,
       username, // Ensure this matches your schema
       password: hashedPassword,
-      userType
+      userType,
     });
 
     console.log("User created:", newUser);

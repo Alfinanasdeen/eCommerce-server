@@ -57,16 +57,17 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Search products by title
-router.get('/api/products/search', async (req, res) => {
-  const { q } = req.query;
+// Endpoint to get products by title
+router.get("/api/products", async (req, res) => {
+  const { title } = req.query; // Get title from query parameters
   try {
+    // Find products where title matches
     const products = await Product.find({
-      title: { $regex: q, $options: 'i' }, // case-insensitive search
+      title: { $regex: title, $options: "i" }, // Case-insensitive search
     });
-    res.json(products);
-  } catch (err) {
-    res.status(500).json({ message: 'Error searching for products' });
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching products", error });
   }
 });
 
