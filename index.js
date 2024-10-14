@@ -33,19 +33,17 @@ connectToMongoDB();
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: "*", // Allow all origins
     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
-    credentials: true, // Allow credentials (cookies, authorization headers)
+    credentials: false, // Do not allow credentials
   })
 );
 
-
-
-app.use("/api", authRouter); 
-app.use("/api/products", verifyToken, productRoute); 
-app.use("/api/carts", verifyToken, cartRoute); 
-app.use("/api/orders", verifyToken, orderRoute); 
+app.use("/api", authRouter);
+app.use("/api/products", verifyToken, productRoute);
+app.use("/api/carts", verifyToken, cartRoute);
+app.use("/api/orders", verifyToken, orderRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
