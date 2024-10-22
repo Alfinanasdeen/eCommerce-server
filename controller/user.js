@@ -59,7 +59,7 @@ const login = async (req, res) => {
 const signup = async (req, res) => {
   console.log("Signup request received:", req.body);
   try {
-    const { email, username, password, userType } = req.body; // Make sure to match the field names
+    const { email, username, password, userType } = req.body; 
     console.log("Received data:", { username, email, password });
 
     if (!username || !email || !password) {
@@ -75,7 +75,7 @@ const signup = async (req, res) => {
 
     const newUser = await User.create({
       email,
-      username, // Ensure this matches your schema
+      username, 
       password: hashedPassword,
       userType,
     });
