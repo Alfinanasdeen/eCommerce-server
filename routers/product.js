@@ -90,4 +90,23 @@ router.post("/admin/products", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.delete("/admin/products/:id", async (req, res) => {
+  try {
+    const _id = req.params.id;
+    console.log(`Deleting product with id: ${_id}`); // Log to confirm ID
+
+    const deletedProduct = await Product.findByIdAndDelete(_id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.status(200).json({ message: "Product deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting product:", error); // Log the error
+    res.status(500).json({ message: "Error deleting product", error });
+  }
+});
+
 export default router;
