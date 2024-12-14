@@ -9,6 +9,7 @@ import productRoute from "./routers/product.js";
 import cartRoute from "./routers/cart.js";
 import orderRoute from "./routers/order.js";
 import authRouter from "./routers/auth.js";
+import paymentRoute from "./routers/paymentRoute.js";
 import { verifyToken } from "./verifyToken.js";
 
 dotenv.config();
@@ -44,6 +45,7 @@ app.use("/api", authRouter);
 app.use("/api/products", verifyToken, productRoute);
 app.use("/api/carts", verifyToken, cartRoute);
 app.use("/api/orders", verifyToken, orderRoute);
+app.use("/api/payment", paymentRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
