@@ -5,12 +5,12 @@ import { fileURLToPath } from "url";
 import path from "path";
 import dotenv from "dotenv";
 import cors from "cors";
-import productRoute from "./routers/product.js";
-import cartRoute from "./routers/cart.js";
-import orderRoute from "./routers/order.js";
-import authRouter from "./routers/auth.js";
-import paymentRoute from "./routers/paymentRoute.js";
-import { verifyToken } from "./verifyToken.js";
+import productRoutes from "./routes/productRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import authRouter from "./routes/auth.js";
+import paymentRoute from "./routes/paymentRoute.js";
+import { verifyToken } from "./middlewares/verifyToken.js";
 
 dotenv.config();
 
@@ -42,9 +42,9 @@ app.use(
 );
 
 app.use("/api", authRouter);
-app.use("/api/products", verifyToken, productRoute);
-app.use("/api/carts", verifyToken, cartRoute);
-app.use("/api/orders", verifyToken, orderRoute);
+app.use("/api/products", verifyToken, productRoutes);
+app.use("/api/carts", verifyToken, cartRoutes);
+app.use("/api/orders", verifyToken, orderRoutes);
 app.use("/api/payment", paymentRoute);
 
 const PORT = process.env.PORT || 5000;

@@ -6,7 +6,7 @@ import {
   confirmUser,
   forgotPassword,
   resetPassword,
-} from "../controller/user.js";
+} from "../controllers/user.js";
 
 const authRouter = Router();
 
