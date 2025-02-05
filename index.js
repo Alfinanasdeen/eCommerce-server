@@ -8,6 +8,7 @@ import cors from "cors";
 import productRoutes from "./routes/productRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import customerRoutes from "./routes/customerRoutes.js";
 import authRouter from "./routes/auth.js";
 import paymentRoute from "./routes/paymentRoute.js";
 import { verifyToken } from "./middlewares/verifyToken.js";
@@ -44,6 +45,7 @@ app.use(
 app.use("/api", authRouter);
 app.use("/api/products", verifyToken, productRoutes);
 app.use("/api/carts", verifyToken, cartRoutes);
+app.use("/api/user", verifyToken, customerRoutes);
 app.use("/api/orders", verifyToken, orderRoutes);
 app.use("/api/payment", paymentRoute);
 

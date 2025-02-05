@@ -55,6 +55,27 @@ export const addProduct = async (req, res) => {
   }
 };
 
+// Edit an existing product
+export const editProduct = async (req, res) => {
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id, // Product ID from request params
+      {
+        $set: req.body, // Fields to update from request body
+      },
+      { new: true } // Return the updated product
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.status(200).json(updatedProduct);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating product", error: err });
+  }
+};
+
 // Get products by title
 export const getProductsByTitle = async (req, res) => {
   const { title } = req.query;

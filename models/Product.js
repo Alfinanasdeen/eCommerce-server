@@ -19,11 +19,10 @@ const ProductSchema = new mongoose.Schema(
       required: true,
     },
     categories: {
-      type: [String], // An array to hold multiple categories (if needed)
+      type: [String],
       required: true,
     },
     filters: {
-      // A flexible filters object that can hold category-specific filters
       brand: { type: String },
       size: { type: String },
       color: { type: String },
@@ -50,4 +49,4 @@ const ProductSchema = new mongoose.Schema(
 
 export default mongoose.model("Product", ProductSchema);
 
-//categories: { type: Array },
+
